@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  nama       String      @db.VarChar(50)
+  password   String      @db.VarChar(255)
+  nis        String      @db.VarChar(150)
+  kelas      String      @db.VarChar(30)
+  tingkat    String      @db.VarChar(30)
+  angkatan   String      @db.VarChar(30)
+  alamat     String      @db.VarChar(255)
+  no_telp    String      @db.VarChar(50)
+  email      String      @db.VarChar(50)
+  foto       String?     @db.VarChar(255)
+  role       Role        @default(SISWA)
+  Tagihan    Tagihan[]
+  Pembayaran Pembayaran[]
+}
+
+model Tagihan {
+  id            Int              @id @default(autoincrement())
+  judul_tagihan String           @db.VarChar(150)
+  total_tagihan Int
+  tenggat_waktu DateTime
+  userId        Int
+  status        StatusPembayaran @default(BELUM_LUNAS)
+  User          User             @relation(fields: [userId], references: [id])
+  Pembayaran    Pembayaran[]
+}
+
+model Pembayaran {
+  id            Int      @id @default(autoincrement())
+  userId        Int      
+  tagihanId     Int
+  nominal       Int
+  tanggal_bayar DateTime @default(now()) @db.Timestamp(6)
+  metode_bayar  String   @db.VarChar(50)
+  Tagihan       Tagihan  @relation(fields: [tagihanId], references: [id])
+  User          User     @relation(fields: [userId], references: [id])
+}
+
+enum StatusPembayaran {
+  BELUM_LUNAS
+  LUNAS
+}
+
+enum Role {
+  SISWA
+  ADMIN
+}

@@ -1,0 +1,26 @@
+GET http://localhost:3000/api/
+
+###
+
+POST http://localhost:3000/api/siswa/create
+Content-Type: text/plain
+
+{
+    "nama": "dinul islami",
+    "nis": "123456789",
+    "kelas": "10 A",
+    "tingkat": "1",
+    "angkatan": "2017/2018",
+    "alamat": "tebo, jambi",
+    "no_telp": "08571709857",
+    "email": "dinulislami70@gmail.com",
+    "password": "K0dokLoncat*"
+}
+
+###
+POST http://localhost:3000/api/siswa/read/signIn
+Content-Type: text/plain
+
+{
+    "nis": "123456789"
+}
