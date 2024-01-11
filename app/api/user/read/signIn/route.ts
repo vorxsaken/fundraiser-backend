@@ -32,8 +32,8 @@ export async function POST(req: Request) {
     const comparePassword = password === originalText;
 
     if (comparePassword) {
-      const { id  } = user[0];
-      const JWT = signJWT({ id });
+      const { id, role  } = user[0];
+      const JWT = signJWT({ id, role });
 
       return new Response(JSON.stringify({ message: 'now authorized', JWT }), {
         status: 200
