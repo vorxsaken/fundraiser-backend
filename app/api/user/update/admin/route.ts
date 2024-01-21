@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server";
-import { database } from "../../base";
+import { database } from "../../../base";
 import CryptoJS from "crypto-js";
 
-export async function Post(req: Request) {
+export async function POST(req: Request) {
 
     const {
         id,
-        nis,
-        kelas,
-        tingkat,
-        angkatan,
+        nama,
         alamat,
         no_telp,
         email,
         password,
+        foto
     } = await req.json();
 
     try {
@@ -28,14 +26,12 @@ export async function Post(req: Request) {
                     id,
                 },
                 data: {
-                    nis,
-                    kelas,
-                    tingkat,
-                    angkatan,
                     alamat,
                     no_telp,
                     email,
                     password: encryptedPassword,
+                    foto,
+                    nama,        
                 },
             })
             .catch((err) => {

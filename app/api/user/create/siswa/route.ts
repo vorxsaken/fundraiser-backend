@@ -1,4 +1,4 @@
-import { database } from "../../base";
+import { database } from "../../../base";
 import { NextResponse } from "next/server";
 import CryptoJS from "crypto-js";
 
@@ -13,6 +13,7 @@ export async function POST(req: Request) {
         alamat,
         no_telp,
         email,
+        foto,
         password,
         role
     } = await req.json();
@@ -50,7 +51,8 @@ export async function POST(req: Request) {
                     alamat,
                     no_telp,
                     email,
-                    role,        
+                    role,
+                    foto,        
                     password: encryptedPassword,
                 },
             })
