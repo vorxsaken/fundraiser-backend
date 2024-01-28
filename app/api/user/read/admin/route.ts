@@ -1,8 +1,7 @@
 import { database } from "@/app/api/base";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function POST(req: Request) {
 
     try {
         const user = await database.user.findMany({

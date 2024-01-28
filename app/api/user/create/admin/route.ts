@@ -9,6 +9,7 @@ export async function POST(req: Request) {
         alamat,
         no_telp,
         email,
+        foto,
         password,
     } = await req.json();
 
@@ -38,7 +39,9 @@ export async function POST(req: Request) {
                     alamat,
                     no_telp,
                     email,
+                    foto,
                     password: encryptedPassword,
+                    role: 'ADMIN'
                 },
             })
             .catch((err) => {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { database } from "../../base";
+import { database } from "../../../base";
 
-export async function Post(req: Request) {
+export async function POST(req: Request) {
 
     const { id } = await req.json();
 
@@ -9,7 +9,8 @@ export async function Post(req: Request) {
         const deleteSiswa = await database.user
             .delete({
                 where: {
-                    id,
+                    id: parseInt(id),
+                    role: 'ADMIN'
                 },
             })
             .catch((err) => {
