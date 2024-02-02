@@ -2,7 +2,7 @@ import { jwtVerify } from 'jose'
 import { NextRequest, NextResponse } from "next/server";
 
 function excludeSignInRoute(pathname: string) {
-    return !pathname.startsWith('/api/user/read/signIn');
+    return /(signin|signinadmin)/gi.test(pathname);
 }
 
 function excludeSiswaRoleRoute(pathname: string) {
@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
     const { token } = await req.json();
 
-    if (excludeSignInRoute(pathname)) {
+    if (!excludeSignInRoute(pathname)) {
         if (token) {
             const secret = new TextEncoder().encode(process.env.SECRET);
   
