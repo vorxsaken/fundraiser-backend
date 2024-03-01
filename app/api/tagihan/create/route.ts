@@ -5,20 +5,20 @@ export async function POST(req: Request) {
 
     const {
         userId,
-        judulTagihan,
-        totalTagihan,
-        tenggatWaktu,
+        judul_tagihan,
+        total_tagihan,
+        tenggat_waktu,
+        status
     } = await req.json();
-
-    const dateTime = new Date(tenggatWaktu).toISOString();
 
     try {
         const createTagihan = await database.tagihan.create({
             data: {
-                userId,
-                judul_tagihan: judulTagihan,
-                total_tagihan: totalTagihan,
-                tenggat_waktu: dateTime
+                userId: parseInt(userId),
+                judul_tagihan,
+                total_tagihan: parseInt(total_tagihan),
+                tenggat_waktu,
+                status
             }
         }).catch(err => { throw err });
 

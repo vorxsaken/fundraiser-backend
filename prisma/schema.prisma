@@ -33,17 +33,42 @@ model Tagihan {
   status        StatusPembayaran @default(BELUM_LUNAS)
   User          User             @relation(fields: [userId], references: [id])
   Pembayaran    Pembayaran[]
+  Draft         DraftTagihan?
 }
 
 model Pembayaran {
-  id            Int      @id @default(autoincrement())
-  userId        Int      
-  tagihanId     Int
-  nominal       Int
-  tanggal_bayar DateTime @default(now()) @db.Timestamp(6)
-  metode_bayar  String   @db.VarChar(50)
-  Tagihan       Tagihan  @relation(fields: [tagihanId], references: [id])
-  User          User     @relation(fields: [userId], references: [id])
+  id                      Int      @id @default(autoincrement())
+  userId                  Int      
+  tagihanId               Int
+  nominal                 Int
+  tanggal_bayar           DateTime @default(now()) @db.Timestamp(6)
+  metode_bayar            String   @db.VarChar(50)
+  Tagihan                 Tagihan  @relation(fields: [tagihanId], references: [id])
+  User                    User     @relation(fields: [userId], references: [id])
+  // midtrans create charge fields
+  status_code             String?
+  status_message          String?
+  transaction_id          String?
+  order_id                String?
+  merchant_id             String?
+  gross_amount            String?
+  currency                String?
+  payment_type            String?
+  transaction_time        String?
+  transaction_status      String?
+  bank                    String?
+  va_number               String?
+  fraud_status            String?
+
+}
+
+model DraftTagihan {
+  id                      Int      @id  @default(autoincrement())
+  id_tagihan              Int      @unique
+  nominal                 Int
+  metode_pembayaran       String   @db.VarChar(30)
+  principal               String   @db.VarChar(30)
+  Tagihan                 Tagihan  @relation(fields: [id_tagihan], references: [id])
 }
 
 enum StatusPembayaran {
