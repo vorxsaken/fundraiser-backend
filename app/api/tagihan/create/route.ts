@@ -18,6 +18,7 @@ export async function POST(req: Request) {
                 judul_tagihan,
                 total_tagihan: parseInt(total_tagihan),
                 tenggat_waktu,
+                sisa_tagihan: parseInt(total_tagihan),
                 status
             }
         }).catch(err => { throw err });

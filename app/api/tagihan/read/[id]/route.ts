@@ -6,15 +6,19 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     const id = params.id ;
 
     try {
-        const tagihan = await database.user.findUnique({
+        let tagihan = await database.user.findUnique({
             where: {
-                id: parseInt(id)
+                id: parseInt(id),
             },
             select: {
-                Tagihan: true
+                Tagihan: {
+                    where: {
+                        status: "BELUM_LUNAS"
+                    }
+                }
             }
         }).catch(err => { throw new Error(err) });
-
+        
         return NextResponse.json(tagihan, { status: 200 });
 
     } catch (error) {

@@ -30,21 +30,20 @@ model Tagihan {
   total_tagihan Int
   tenggat_waktu DateTime
   userId        Int
+  sisa_tagihan  Int?   
   status        StatusPembayaran @default(BELUM_LUNAS)
   User          User             @relation(fields: [userId], references: [id])
   Pembayaran    Pembayaran[]
-  Draft         DraftTagihan?
+  Draft         DraftTagihan[]
 }
 
 model Pembayaran {
   id                      Int      @id @default(autoincrement())
   userId                  Int      
-  tagihanId               Int
+  tagihanId               Int?
   nominal                 Int
   tanggal_bayar           DateTime @default(now()) @db.Timestamp(6)
   metode_bayar            String   @db.VarChar(50)
-  Tagihan                 Tagihan  @relation(fields: [tagihanId], references: [id])
-  User                    User     @relation(fields: [userId], references: [id])
   // midtrans create charge fields
   status_code             String?
   status_message          String?
@@ -59,15 +58,18 @@ model Pembayaran {
   bank                    String?
   va_number               String?
   fraud_status            String?
-
+  Tagihan                 Tagihan?  @relation(fields: [tagihanId], references: [id])
+  User                    User     @relation(fields: [userId], references: [id])
 }
 
 model DraftTagihan {
   id                      Int      @id  @default(autoincrement())
-  id_tagihan              Int      @unique
+  id_tagihan              Int
   nominal                 Int
   metode_pembayaran       String   @db.VarChar(30)
   principal               String   @db.VarChar(30)
+  virtual_number          String   @db.VarChar(100)
+  status                  Int?      
   Tagihan                 Tagihan  @relation(fields: [id_tagihan], references: [id])
 }
 

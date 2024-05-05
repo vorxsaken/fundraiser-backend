@@ -8,7 +8,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     try {
         const pembayaran = await database.pembayaran.findMany({
             where: {
-                tagihanId: parseInt(id)
+                userId: parseInt(id)
             },
             include: {
                 Tagihan: {
