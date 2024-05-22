@@ -3,9 +3,7 @@ import { database } from "../../base";
 import type { midtransResponse } from "@/lib/types";
 
 const MIDTRANS_URL = process.env.MIDTRANS_URL
-const MIDTRANS_URL_SANDBOX = process.env.MIDTRANS_URL_SANDBOX
 const AUTH_KEY = process.env.AUTH_KEY
-const AUTH_KEY_SANDBOX = process.env.AUTH_KEY_SANDBOX
 
 export async function POST(req: Request) {
 
