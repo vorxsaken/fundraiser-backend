@@ -22,6 +22,7 @@ export async function POST(req: Request) {
 
 
     if (transaction_status === "pending") return NextResponse.json({"message": "status is pending, not resolved"}, { status: 201 });
+    if (payment_type === "gopay") return NextResponse.json({"message": "success for midtrans test notifications"}, { status: 200 });
 
     const tagihanId = parseInt(order_id.split('-')[0])
 
