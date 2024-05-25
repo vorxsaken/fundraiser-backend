@@ -16,10 +16,10 @@ export async function POST(req: Request) {
                 id
             },
             data: {
-                judul_tagihan: judulTagihan,
-                total_tagihan: totalTagihan,
+                judul_tagihan,
+                total_tagihan,
                 status,
-                tenggat_waktu: tenggatWaktu
+                tenggat_waktu
             }
         }).catch(err => { throw new Error(err) });
 
