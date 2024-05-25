@@ -3,7 +3,7 @@ import { database } from "@/app/api/base";
 
 export async function POST(req: Request) {
     const {
-        userId,
+        id,
         judul_tagihan,
         total_tagihan,
         tenggat_waktu,
