@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { database } from "../../base";
 import type { midtransResponse } from "@/lib/types";
 
+const MIDTRANS_URL = process.env.MIDTRANS_URL
+const AUTH_KEY = process.env.AUTH_KEY
+
 export async function POST(req: Request) {
 
     const {
@@ -41,12 +44,12 @@ export async function POST(req: Request) {
             }
         }
 
-        const createMidtransPayment = await fetch('https://api.sandbox.midtrans.com/v2/charge', {
+        const createMidtransPayment = await fetch(`${MIDTRANS_URL}`, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Authorization": "Basic U0ItTWlkLXNlcnZlci1xTmh0WHE2dFdteXZlNEltSFAxaG1wYmE6"
+                "Authorization": `Basic ${AUTH_KEY}`
             },
             body: JSON.stringify(body)
         })

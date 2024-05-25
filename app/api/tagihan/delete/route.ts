@@ -1,9 +1,9 @@
 import { database } from "@/app/api/base";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request) {
 
-    const id = params.id;
+    const { id } = await req.json();
 
     try {
         const deleteTagihan = await database.tagihan.delete({

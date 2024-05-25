@@ -43,6 +43,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: 'password salah' }, { status: 401 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
