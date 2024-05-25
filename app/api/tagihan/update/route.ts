@@ -13,11 +13,11 @@ export async function POST(req: Request) {
     try {
         const createTagihan = await database.tagihan.update({
             where: {
-                id
+                id: parseInt(id)
             },
             data: {
                 judul_tagihan,
-                total_tagihan,
+                total_tagihan: parseInt(total_tagihan),
                 status,
                 tenggat_waktu
             }
