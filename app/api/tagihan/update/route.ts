@@ -26,6 +26,7 @@ export async function POST(req: Request) {
         return NextResponse.json(createTagihan, { status: 200 });
 
     } catch (error) {
+        console.log(error)
         return NextResponse.json(error, { status: 500 })
     }
 }
