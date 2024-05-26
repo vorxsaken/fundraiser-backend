@@ -43,7 +43,7 @@ export async function POST(req: Request) {
                 "id_user": id_user
             }
         }
-
+        console.log("this is the midtrans body : ", body)
         console.log("wanna create midtrans bank payment")
         const createMidtransPayment = await fetch(`${MIDTRANS_URL}`, {
             method: "POST",
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
         })
         const midjson = await createMidtransPayment.json()
         console.log("it should be success, if not look at this : ", midjson)
-        
+
         const payment = await createMidtransPayment.json() as midtransResponse
 
         const updateDraftTagihan = await database.draftTagihan.update({
