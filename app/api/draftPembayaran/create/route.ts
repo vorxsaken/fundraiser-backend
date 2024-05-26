@@ -44,6 +44,7 @@ export async function POST(req: Request) {
             }
         }
 
+        console.log("wanna create midtrans bank payment")
         const createMidtransPayment = await fetch(`${MIDTRANS_URL}`, {
             method: "POST",
             headers: {
