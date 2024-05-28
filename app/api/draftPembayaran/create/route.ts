@@ -58,13 +58,14 @@ export async function POST(req: Request) {
         console.log("it should be success, if not look at this : ", midjson)
 
         const payment = await createMidtransPayment.json() as midtransResponse
-
+        const parse = JSON.parse(payment)
+        
         const updateDraftTagihan = await database.draftTagihan.update({
             where: {
                 id: createDraftTagihan.id
             },
             data: {
-                virtual_number: payment.va_numbers[0].va_number
+                virtual_number: parse.va_numbers[0].va_number
             }
         }).catch(err => {throw err})
 
