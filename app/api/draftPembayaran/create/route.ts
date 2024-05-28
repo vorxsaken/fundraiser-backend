@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
         const updateDraftTagihan = await database.draftTagihan.update({
             where: {
-                id: parseInt(createDraftTagihan.id)
+                id: createDraftTagihan.id
             },
             data: {
                 virtual_number: payment.va_numbers[0].va_number
