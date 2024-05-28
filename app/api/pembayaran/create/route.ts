@@ -94,7 +94,7 @@ export async function POST(req: Request) {
             }
 
             return NextResponse.json(draftTagihan, { status: 200 })
-        } else if (transaction_status === 'expire') {
+        } else if (transaction_status === 'expire' || transaction_status === "cancel") {
             await database.draftTagihan.delete({
                 where: {
                     id: metadata.draft_tagihan_id
