@@ -27,69 +27,83 @@ export async function POST(req: Request) {
     const tagihanId = parseInt(order_id.split('-')[0])
 
     try {
-        await database.pembayaran.create({
-            data: {
-                metode_bayar: payment_type,
-                nominal: parseInt(gross_amount),
-                bank: va_numbers[0].bank,
-                currency,
-                fraud_status,
-                gross_amount,
-                merchant_id,
-                order_id,
-                tagihanId,
-                userId: metadata.id_user,
-                payment_type,
-                status_code,
-                status_message,
-                transaction_status,
-                transaction_id,
-                transaction_time,
-                va_number: va_numbers[0].va_number,
-            }
-        }).catch(err => { throw err })
-
-        const draftTagihan = await database.draftTagihan.update({
-            where: {
-                id: metadata.draft_tagihan_id
-            },
-            data: {
-                status: 1
-            }
-        }).catch(err => { throw err })
-
-        const tagihan = await database.tagihan.findUnique({
-            where: {
-                id: tagihanId
-            },
-            select: {
-                sisa_tagihan: true
-            }
-        }).catch(err => { throw err }) as any
-
-        const calcSisaTagihan = tagihan.sisa_tagihan - parseInt(gross_amount)
-
-        const updateTagihan = await database.tagihan.update({
-            where: {
-                id: tagihanId
-            },
-            data: {
-                sisa_tagihan: calcSisaTagihan
-            }
-        }).catch(err => { throw err }) as any
-
-        if (updateTagihan.sisa_tagihan <= 0) {
-            await database.tagihan.update({
+        console.log('virtual number : ', va_numbers[0].va_number)
+        console.log('metadata draft tagihan : ', metadata.draft_tagihan_id)
+        
+        if(transaction_status != 'expire') {
+            await database.pembayaran.create({
+                data: {
+                    metode_bayar: payment_type,
+                    nominal: parseInt(gross_amount),
+                    bank: va_numbers[0].bank,
+                    currency,
+                    fraud_status,
+                    gross_amount,
+                    merchant_id,
+                    order_id,
+                    tagihanId,
+                    userId: metadata.id_user,
+                    payment_type,
+                    status_code,
+                    status_message,
+                    transaction_status,
+                    transaction_id,
+                    transaction_time,
+                    va_number: va_numbers[0].va_number,
+                }
+            }).catch(err => { throw err })
+    
+            const draftTagihan = await database.draftTagihan.update({
+                where: {
+                    id: metadata.draft_tagihan_id
+                },
+                data: {
+                    status: 1
+                }
+            }).catch(err => { throw err })
+    
+            const tagihan = await database.tagihan.findUnique({
+                where: {
+                    id: tagihanId
+                },
+                select: {
+                    sisa_tagihan: true
+                }
+            }).catch(err => { throw err }) as any
+    
+            const calcSisaTagihan = tagihan.sisa_tagihan - parseInt(gross_amount)
+    
+            const updateTagihan = await database.tagihan.update({
                 where: {
                     id: tagihanId
                 },
                 data: {
-                    status: 'LUNAS'
+                    sisa_tagihan: calcSisaTagihan
                 }
-            }).catch(err => { throw err })
+            }).catch(err => { throw err }) as any
+    
+            if (updateTagihan.sisa_tagihan <= 0) {
+                await database.tagihan.update({
+                    where: {
+                        id: tagihanId
+                    },
+                    data: {
+                        status: 'LUNAS'
+                    }
+                }).catch(err => { throw err })
+            }
+            
+            return NextResponse.json(draftTagihan, { status: 200 })
         }
 
-        return NextResponse.json(draftTagihan, { status: 200 })
+        await database.draftTagihan.delete({
+            where: {
+                id: metadata.draft_tagihan_id
+            }
+        })
+
+        return NextResponse.json({message: 'draft tagihan deleted'}, { status: 200 })
+
     } catch (error) {
         console.log(error)
         return NextResponse.json(error, { status: 500 })
