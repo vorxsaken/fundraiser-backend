@@ -64,7 +64,7 @@ export async function POST(req: Request) {
                 id: createDraftTagihan.id
             },
             data: {
-                virtual_number: parse.va_numbers[0].va_number
+                virtual_number: payment.va_numbers[0].va_number
             }
         }).catch(err => {throw err})
 
