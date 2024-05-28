@@ -66,7 +66,7 @@ export async function POST(req: Request) {
             data: {
                 virtual_number: payment.va_numbers[0].va_number
             }
-        })
+        }).catch(err => {throw err})
 
         console.log(updateDraftTagihan);
         return NextResponse.json(updateDraftTagihan, { status: 200 });
