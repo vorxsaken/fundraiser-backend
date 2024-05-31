@@ -43,7 +43,8 @@ export async function POST(req: Request) {
                 "id_user": id_user
             }
         }
-
+        console.log("this is the midtrans body : ", body)
+        console.log("wanna create midtrans bank payment")
         const createMidtransPayment = await fetch(`${MIDTRANS_URL}`, {
             method: "POST",
             headers: {
@@ -53,8 +54,10 @@ export async function POST(req: Request) {
             },
             body: JSON.stringify(body)
         })
-
-        const payment = await createMidtransPayment.json() as midtransResponse
+        
+        const payment = await createMidtransPayment.json() as any
+        
+        console.log("it should be success, if not look at this : ", payment.va_numbers[0])
 
         const updateDraftTagihan = await database.draftTagihan.update({
             where: {
@@ -63,7 +66,7 @@ export async function POST(req: Request) {
             data: {
                 virtual_number: payment.va_numbers[0].va_number
             }
-        })
+        }).catch(err => {throw err})
 
         console.log(updateDraftTagihan);
         return NextResponse.json(updateDraftTagihan, { status: 200 });
