@@ -1,0 +1,7 @@
+DATABASE_URL=postgres://postgres.mschojplejqhpgzrynyi:DinulIslami*@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true
+DIRECT_URL=postgres://postgres.mschojplejqhpgzrynyi:DinulIslami*@aws-0-ap-southeast-1.pooler.supabase.com:5432
+MIDTRANS_URL=https://api.midtrans.com/v2/charge
+MIDTRANS_URL_SANDBOX=https://api.sandbox.midtrans.com/v2/charge
+AUTH_KEY=TWlkLXNlcnZlci1JNmNqeG1tUnFVNlAzRVhBbFNKNWYxaVc6
+AUTH_KEY_SANDBOX=U0ItTWlkLXNlcnZlci1xTmh0WHE2dFdteXZlNEltSFAxaG1wYmE6
+SECRET=kjnedifhu287wo3hfinwjinefuighw223ghfn2qw3if_3029jwd20in
