@@ -10,7 +10,6 @@ export async function POST(req: Request) {
         merchant_id,
         metadata,
         order_id,
-        payment_amounts,
         payment_type,
         status_code,
         status_message,
@@ -33,8 +32,7 @@ export async function POST(req: Request) {
         if (transaction_status === 'settlement') {
             await database.pembayaran.create({
                 data: {
-                    metode_bayar: payment_type,
-                    nominal: parseInt(gross_amount),
+                    total: parseInt(gross_amount),
                     bank: va_numbers[0].bank,
                     currency,
                     fraud_status,
@@ -49,7 +47,6 @@ export async function POST(req: Request) {
                     transaction_status,
                     transaction_id,
                     transaction_time,
-                    va_number: va_numbers[0].va_number,
                 }
             }).catch(err => { throw err })
 
@@ -58,7 +55,7 @@ export async function POST(req: Request) {
                     id: metadata.draft_tagihan_id
                 },
                 data: {
-                    status: 1
+                    kondisi: 1
                 }
             }).catch(err => { throw err })
 

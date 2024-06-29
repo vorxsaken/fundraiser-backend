@@ -25,7 +25,7 @@ export async function POST(req: Request) {
                 metode_pembayaran,
                 virtual_number: "",
                 principal,
-                status: 0
+                kondisi: 0
             }
         }).catch(err => { throw err });
 

@@ -19,7 +19,8 @@ export async function POST(req: Request, { params }: { params: { id: string } })
             }
         })
         
-        return NextResponse.json(pembayaran, { status: 200 });
+        const res = pembayaran.map(val => ({...val, nominal: val.total}))
+        return NextResponse.json(res, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
     }
