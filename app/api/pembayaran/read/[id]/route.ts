@@ -19,18 +19,17 @@ export async function POST(req: Request, { params }: { params: { id: string } })
             }
         })
 
-        const o = pembayaran.map(val => ([...val.Tagihan.map(val => ([...val.Pembayaran]))])).flat().flat();
-        const oo = pembayaran.map(val => ([...val.Tagihan])).flat();
-        const res = [] as any
-
-        for (var i = 0; i < o.length; i++) {
-            res.push({
-                ...o[i],
-                Tagihan: { ...oo[i] }
+        const y = pembayaran.map(val => {
+            const { Tagihan, ...user } = val
+            const flat = Tagihan.map(val1 => {
+                const { Pembayaran, ...tagihan } = val1
+                return Pembayaran.map(val2 => ({ ...val2, Tagihan: { ...tagihan } }))
             })
-        }
 
-        console.log(res)
+            return flat
+        })
+
+        const res = y.map(val => ({ ...val, nominal: val.total }))
         return NextResponse.json(res, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
