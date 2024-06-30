@@ -29,7 +29,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
             return flat
         }).flat().flat()
 
-        const res = y.map(val => ({ ...val, nominal: val.total }))
+        const res = y.map(val => ({ ...val, nominal: val.total, metode_bayar: val.bank }))
         return NextResponse.json(res, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
