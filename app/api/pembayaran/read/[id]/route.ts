@@ -24,7 +24,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         const res = [] as any
 
         for (var i = 0; i < o.length; i++) {
-            y.push({
+            res.push({
                 ...o[i],
                 Tagihan: { ...oo[i] }
             })
