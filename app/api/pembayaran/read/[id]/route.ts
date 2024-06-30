@@ -30,6 +30,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
             })
         }
 
+        console.log(res)
         return NextResponse.json(res, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
