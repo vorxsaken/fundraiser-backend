@@ -21,8 +21,8 @@ export async function POST(req: Request, { params }: { params: { id: string } })
 
         const o = pembayaran.map(val => ([...val.Tagihan.map(val => ([...val.Pembayaran]))])).flat().flat();
         const oo = pembayaran.map(val => ([...val.Tagihan])).flat();
-        const res = []
-        
+        const res = [] as any
+
         for (var i = 0; i < o.length; i++) {
             y.push({
                 ...o[i],
