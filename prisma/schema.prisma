@@ -22,7 +22,6 @@ model User {
   foto       String?     @db.VarChar(255)
   role       Role        @default(SISWA)
   Tagihan    Tagihan[]
-  Pembayaran Pembayaran[]
 }
 
 model Tagihan {
@@ -39,8 +38,7 @@ model Tagihan {
 }
 
 model Pembayaran {
-  id                      Int      @id @default(autoincrement())
-  userId                  Int      
+  id                      Int      @id @default(autoincrement())   
   tagihanId               Int?
   total                   Int
   tanggal_bayar           DateTime @default(now()) @db.Timestamp(6)
@@ -58,7 +56,6 @@ model Pembayaran {
   bank                    String?
   fraud_status            String?
   Tagihan                 Tagihan?  @relation(fields: [tagihanId], references: [id])
-  User                    User     @relation(fields: [userId], references: [id])
 }
 
 model DraftTagihan {
