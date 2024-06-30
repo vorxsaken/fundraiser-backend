@@ -40,7 +40,6 @@ export async function POST(req: Request) {
                     merchant_id,
                     order_id,
                     tagihanId,
-                    userId: metadata.id_user,
                     payment_type,
                     status_code,
                     status_message,
