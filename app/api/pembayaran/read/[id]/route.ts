@@ -6,20 +6,30 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     const { id } = params;
 
     try {
-        const pembayaran = await database.pembayaran.findMany({
+        const pembayaran = await database.user.findMany({
             where: {
-                userId: parseInt(id)
+                id: parseInt(id)
             },
             include: {
                 Tagihan: {
-                    select: {
-                        judul_tagihan: true
+                    include: {
+                        Pembayaran: true
                     }
                 }
             }
         })
+
+        const o = pembayaran.map(val => ([...val.Tagihan.map(val => ([...val.Pembayaran]))])).flat().flat();
+        const oo = pembayaran.map(val => ([...val.Tagihan])).flat();
+        const res = []
         
-        const res = pembayaran.map(val => ({...val, nominal: val.total, metode_bayar: val.bank}))
+        for (var i = 0; i < o.length; i++) {
+            y.push({
+                ...o[i],
+                Tagihan: { ...oo[i] }
+            })
+        }
+
         return NextResponse.json(res, { status: 200 });
     } catch (error) {
         return NextResponse.json(error, { status: 500 });
